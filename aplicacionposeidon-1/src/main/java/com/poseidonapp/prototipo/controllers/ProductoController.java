@@ -130,7 +130,7 @@ public class ProductoController {
 	}
 	
 	
-	@GetMapping(value="/uploads/{filename:.+}")
+	@GetMapping(value="/rcifuent/uploads/{filename:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
 		Path pathFoto = Paths.get("uploads").resolve(filename).toAbsolutePath();
 	
