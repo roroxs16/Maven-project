@@ -28,7 +28,7 @@
 	 	<div class= "card-header">
 	 	</div>
 	 	<div class="card-body">
-	 		<img class="img-thumbnail rounded float-left" style="max-width: 25%;" th:src="@{'/producto/uploads/' +${producto.imagen}}"/>
+	 		<img class="img-thumbnail rounded float-left" style="max-width: 25%;" th:src="@{'rcifuent/producto/uploads/' +${producto.imagen}}"/>
 	 		
 	 		<ul class="list-group">
 	 			<li class="list-group-item" th:text="${producto.nombreProducto}"></li>
