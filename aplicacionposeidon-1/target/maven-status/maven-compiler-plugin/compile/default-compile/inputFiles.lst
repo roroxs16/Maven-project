@@ -1,0 +1,14 @@
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/ServletInitializer.java
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/controllers/CategoriaController.java
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/controllers/HomeController.java
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/repository/CategoriaRepository.java
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/controllers/ProductoController.java
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/model/Producto.java
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/repository/ProductoRepository.java
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/service/ProductoService.java
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/model/Categoria.java
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/Aplicacionposeidon1Application.java
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/service/CategoriaServiceIML.java
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/service/CategoriaService.java
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/service/ProductoServiceIML.java
+/home/maty/Escritorio/rorro/Maven-project/aplicacionposeidon-1/src/main/java/com/poseidonapp/prototipo/MvcConfig.java
