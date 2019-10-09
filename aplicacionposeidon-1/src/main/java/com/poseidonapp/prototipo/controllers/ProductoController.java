@@ -172,7 +172,7 @@ public class ProductoController {
 			
 		}
 		
-		return "redirect:/rcifuent/categoria/";
+		return "listcategoria";
     }
 	
 	@RequestMapping(value="/updateproducto/{id}", method=RequestMethod.GET)
