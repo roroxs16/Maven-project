@@ -7,35 +7,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <title>Poseidón</title>
+<link  rel="icon"   href="/img/logotipo-color.png" type="image/png" />
 
-<link rel="stylesheet" type="text/css" href="/rcifuent/css/home.css" />
-<link rel="stylesheet" type="text/css" href="/rcifuent/css/aboutus.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/home.css" />
+<link rel="stylesheet" type="text/css" href="/css/aboutus.css" />
 <link rel="stylesheet" type="text/css"
-	href="/rcifuent/webjars/bootstrap/4.1.0/css/bootstrap.min.css" />
+	href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" />
 <script type="text/javascript"
-	src="/rcifuent/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript"
-	src="/rcifuent/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+	src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
 </head>
 <body>
 
 	<div th:insert="navbar">...</div>
 	
-	<div class="contenedor">
-
-		<div align="center" >
-			<img src="/rcifuent/img/poseidon.jpg" alt="Imagen no disponible" class="img-thumbnail rounded" style="max-width: 100%;">
-		</div>
-			<div class="centrado" id="texto">
+	  
+ <div class="container">
+		<nav style= "background-color:white; padding-left: 20px;" aria-label="breadcrumb">
+			<!--MIGAS DE PAN-->
+			<ol class="breadcrumb bg-white pl-0" style="padding-top: 30px; padding-bottom: 5px;">
+				<li class="breadcrumb-item"><a href="/">Inicio </a></li>
+				<li class="breadcrumb-item active" aria-current="page">Sobre Nosotros</li>
+						
+			</ol>
+		</nav>
+		<!--FIN MIGAS DE PAN-->
+	</div>
+			<div style="padding-bottom: 100px">
+	<div class="container" style="padding: 0 36px 50px 36px;">
+	
+			<div class="card" style="width: 1074px; height: 500px;border: none;">
+			<h3>Sobre Nosotros</h3>
+			<hr>
+			<div class="row">
+				<div class="col">
+				<img src="/img/logotipo-color.png"
+				>
+				</div>
+				
+				<div class="col">
 				<h2>Visión</h2>
+				<hr    style=" width: 95%;">
 				<p >Ser la numero uno en el mercado en cuanto al servicio y
 					producto creando estrategias que nos permitan satisfacer las
 					necesidades de nuestros clientes, nuestra principal virtud es la
 					eficiencia y la calidad, utilizando la tecnología de punta y
 					mejorando continuamente para ser competitiva y sustentable en el
 					futuro.</p>
+				</div>
+			</div>
 			
-				<h2>Misión</h2>
+			<div class="row">
+				<div class="col"></div>
+				<div class="col "style="margin-top:-145px">
+				<h2 >Misión</h2>
+				<hr    style=" width: 95%;">
 				<p >Ofrecer a nuestros clientes un servicio de calidad, abajo
 					costo, eficaz y responsable que contribuya al abastecimiento de
 					dicho rublo y el desarrollo económico de nuestra comunidad. Nuestra
@@ -44,13 +72,11 @@
 					central de nuestro éxito y creando estrategias que nos permitan
 					mejorar cada día dotándonos de los mejores equipos humanos y
 					tecnológicos.</p>
+				</div>
+			</div>
 			</div>
 		</div>
-
-
-
-
-
+		</div>
 	<div th:insert="footer"></div>
 
 </body>

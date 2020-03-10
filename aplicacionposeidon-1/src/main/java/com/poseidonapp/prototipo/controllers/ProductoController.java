@@ -20,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,12 +34,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poseidonapp.prototipo.model.Categoria;
 import com.poseidonapp.prototipo.model.Producto;
+import com.poseidonapp.prototipo.service.VentaService;
 import com.poseidonapp.prototipo.service.CategoriaService;
 import com.poseidonapp.prototipo.service.ProductoService;
 
 @Controller
 @RequestMapping("/producto")
-@SessionAttributes("producto")
 public class ProductoController {
 
 	@Autowired
@@ -48,39 +49,39 @@ public class ProductoController {
 	private CategoriaService categoriaService;
 	
 	
+
 	@RequestMapping("/")
-	public String listarProducto(Model model) {
-		
+	public String listarCatalogo(Model model) {
 		model.addAttribute("productos", productoService.listAll());
 		
-		return "listp";
+		return "listaproductos";
 	}
 	
 	@GetMapping("/ver/{id}")
 	public String detalleProducto(@PathVariable(value="id") int id ,Model model) {
 		
 		Producto producto= productoService.findOne(id);
-		
+		model.addAttribute("producto", productoService.listAll());
 		model.addAttribute("producto", producto);
 		
 		return "ver";
 	}
 
-
-	
 	
 	
 	@GetMapping("/formularioproducto/{categoriaId}")
-	public String formularioProducto(@PathVariable(value="categoriaId") int clienteId, Model model) {
+	public String formularioProducto(@PathVariable(value="categoriaId") int categoriaId, Model model) {
 		
-		Categoria categoria= categoriaService.findId(clienteId);
+		Categoria categoria= categoriaService.findId(categoriaId);
 		
 		if(categoria==null) {
 			return "redirect:/";
 		}
 		
 		Producto producto= new Producto();
+		
 		producto.setCategoria(categoria);
+		System.out.println(producto);
 		model.addAttribute("producto", producto);
 		
 		return "addproducto";
@@ -91,24 +92,30 @@ public class ProductoController {
 	
 	
 	@RequestMapping(value = "/saveproductosucces",method=RequestMethod.POST)
-	public String formularioProductoSave(@Valid Producto producto, Model model, @RequestParam("file") MultipartFile foto, RedirectAttributes flash ) throws Exception {
-		
+	public String formularioProductoSave(@Valid Producto producto, BindingResult result, Model model, @RequestParam("file") MultipartFile foto, RedirectAttributes flash ) throws Exception {
+		System.out.println(producto);
+		if (result.hasErrors()) {
+         //   return "addproducto";
+        }
 		if(!foto.isEmpty()) {
 		
 			
 			
 			
 			if(producto.getId()>0 && producto.getImagen()!=null) {
-				Path rootPath =Paths.get("uploads").resolve(producto.getImagen()).toAbsolutePath();
+				Path rootPath =Paths.get("src//main//resources//static/imgProducto").resolve(producto.getImagen()).toAbsolutePath();
 				File archivo= rootPath.toFile();
 				
 				if(archivo.exists()&& archivo.canRead()) {
 					archivo.delete();
 				}
+				flash
+		        .addFlashAttribute("mensaje", "Editado correctamente")
+		        .addFlashAttribute("clase", "success");
 			}
 			
 			String uniqueFilename= UUID.randomUUID().toString()+"_"+foto.getOriginalFilename();
-			Path rootPath= Paths.get("uploads").resolve(uniqueFilename);
+			Path rootPath= Paths.get("src//main//resources//static/imgProducto").resolve(uniqueFilename);
 			
 			Path rootAbsoluPath = rootPath.toAbsolutePath();
 			
@@ -124,15 +131,20 @@ public class ProductoController {
 				e.printStackTrace();
 			}
 		}
+	
 		
 		productoService.save(producto);
-		return "redirect:/categoria/";
+
+		flash
+        .addFlashAttribute("mensaje", "Productos actualizados")
+        .addFlashAttribute("clase", "success");
+		return "redirect:/categoria/listcategoria/"+producto.getCategoria().getId();
 	}
 	
 	
-	@GetMapping(value="/rcifuent/uploads/{filename:.+}")
+	@GetMapping(value="/uploads/{filename:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
-		Path pathFoto = Paths.get("uploads").resolve(filename).toAbsolutePath();
+		Path pathFoto = Paths.get("src//main//resources//static/imgProducto").resolve(filename).toAbsolutePath();
 	
 		Resource recurso = null;
 		try {
@@ -155,13 +167,18 @@ public class ProductoController {
        
 		
         
-     
+		Producto producto= productoService.findOne(id);
+		int aux=producto.getCategoria().getId();
 		
 		if(id>0) {
-			Producto producto= productoService.findOne(id);
-			productoService.delete(id);
 			
-			Path rootPath =Paths.get("uploads").resolve(producto.getImagen()).toAbsolutePath();
+			productoService.delete(id);
+			flash
+	        .addFlashAttribute("mensaje", "Producto eliminado correctamente")
+	        .addFlashAttribute("clase", "warning");
+			
+			if(producto.getImagen()!=null) {
+			Path rootPath =Paths.get("src//main//resources//static/imgProducto").resolve(producto.getImagen()).toAbsolutePath();
 			File archivo= rootPath.toFile();
 			
 			if(archivo.exists()&& archivo.canRead()) {
@@ -171,8 +188,9 @@ public class ProductoController {
 			}
 			
 		}
+		}
 		
-		return "redirect:/categoria/";
+		return "redirect:/categoria/listcategoria/"+aux;
     }
 	
 	@RequestMapping(value="/updateproducto/{id}", method=RequestMethod.GET)
@@ -185,16 +203,18 @@ public class ProductoController {
 			model.addAttribute("producto",new Producto());
 		}
 		
-		return "addproducto";
+		return "updateproducto";
 	}
 	
 	
 	@RequestMapping(value="/updateproductosucces", method= RequestMethod.POST)
-	public String updateProducto(Model model, @ModelAttribute ("producto") Producto producto) {
-		
-		System.out.println(producto);
+	public String updateProducto(Model model,@Valid @ModelAttribute ("producto") Producto producto,BindingResult result,RedirectAttributes flash) throws Exception {
+		if (result.hasErrors()) {
+            return "addproducto";
+        }
 		productoService.save(producto);
 		
-		return "redirect:/producto/";
+		
+		return "redirect:/categoria/listcategoria/"+producto.getCategoria().getId();
 	}
 }

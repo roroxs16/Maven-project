@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Poseidon</title>
+<link  rel="icon"   href="/img/logotipo-color.png" type="image/png" />
+
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/navbar.css" />
+<link rel="stylesheet"
+	href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" />
+<script type="text/javascript"
+	src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+<!-- <link rel="stylesheet" href="../css/shards.min.css"> -->
+</head>
+<body>
+
+	<div th:insert="navbar">...</div>
+	
+	<div class="container">
+		<nav style="background-color: white; padding-left: 20px;"
+			aria-label="breadcrumb">
+			<!--MIGAS DE PAN-->
+			<ol class="breadcrumb bg-white pl-0"
+				style="padding-top: 30px; padding-bottom: 5px;">
+
+				<li class="breadcrumb-item"><a href="/">Inicio </a></li>
+				<li class="breadcrumb-item active" aria-current="page">Detalle de compra</li>
+			</ol>
+		</nav>
+		<!--FIN MIGAS DE PAN-->
+	</div>
+	
+	<div class="container" style="padding: 0 36px 50px 36px;">
+
+		<div class="card" style="width: 1074px; height: 500px; border: none;">
+		<div id="print">
+				<h3>Detalle de compra</h3>
+			<div class="card-body">
+				<table class="table table-bordered table-responsive-md table-hover">
+
+					<thead class="thead-light">
+						<th>Nombre</th>
+						<th>Cantidad</th>
+						<th>Valor unitario ($ CL)</th>
+						<th>Valor total ($ CL)</th>
+						<th>Eliminar</th>
+					</thead>
+					<tbody>
+
+
+						<tr th:each="pv: ${productoVenta}">
+
+							<td th:text="${pv.producto.nombreProducto}"></td>
+							<td th:text="${pv.cantidad_producto}"></td>
+							<td th:text="${pv.producto.valor}"></td>
+							<td th:text="${pv.subtotal}"></td>
+
+
+							<td><a th:href="@{/venta/delete/{id}(id=${pv.id})}"
+								class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
+						</tr>
+
+						<tr>
+							<td colspan="4"><b>Total compra ($ CL)</b></td>
+
+							<td th:text="${total}"></td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<div style="padding-left: 800px; padding-bottom: 5px;">
+					<a href="/producto/" style="margin-left: -28% !important;" class="btn btn-secondary">
+							Seguir comprando </a>
+					<a> <form th:action="@{/venta/finishsale}" method="post">
+					<div >
+					<!-- <input type="hidden" name="total" value="3" > -->
+					<input type="hidden" name="total" th:value="${total}">
+					<input type="hidden" name="venta" th:value="${venta}">
+						<button class="btn btn-success" style="margin-top: -28%;
+    margin-left: 44%;"
+							type="submit">Comprar</button>
+					</div>
+					
+				</form>	
+				</a>
+							
+	</div>
+				
+				
+				
+				
+				
+						
+				
+				
+
+
+</div>
+			</div>
+		</div>
+	</div>
+	<div th:insert="footer"></div>
+</body>
+
+</html>

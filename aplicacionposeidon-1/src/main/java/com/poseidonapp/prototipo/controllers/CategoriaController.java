@@ -1,6 +1,7 @@
 package com.poseidonapp.prototipo.controllers;
 
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poseidonapp.prototipo.model.Categoria;
 import com.poseidonapp.prototipo.model.Producto;
@@ -39,11 +41,14 @@ public class CategoriaController {
 	@Autowired
 	private CategoriaService categoriaService;
 	
+	@Autowired
+	private ProductoService productoService;
 	
 	//funcionalidad de listar categorias
 	@RequestMapping("/")
-	public String listarCategoria(Model model) {
+	public String listarCategoria(@Valid @ModelAttribute("categoria") Categoria categoria,  BindingResult result, Model model,SessionStatus status,RedirectAttributes redirectAttrs) {
 		model.addAttribute("categorias", categoriaService.listAll());
+		model.addAttribute("categoria", new Categoria());
 		
 		return "listcategoria";
 	}
@@ -61,22 +66,21 @@ public class CategoriaController {
 	}
 	//guarda la categoria
 	@PostMapping("/savecategoriasucces")
-	public String formularioCategoriaSave(@Valid @ModelAttribute Categoria categoria, Model model, SessionStatus status) {
-		
-		
+	public String formularioCategoriaSave(@Valid @ModelAttribute("categoria") Categoria categoria, BindingResult result, Model model,SessionStatus status,RedirectAttributes redirectAttrs) throws IOException  {
+		if (result.hasErrors()) {
+           // return "addcategoria";
+          //  return "redirect:/categoria/";
+        }
 		
 		categoriaService.save(categoria);
+		redirectAttrs
+        .addFlashAttribute("mensaje", "Categoria agregada correctamente")
+        .addFlashAttribute("clase", "success");
 		status.setComplete();
 		return "redirect:/categoria/";
-		
+	
 	}
 
-	/*busca por id
-	public Categoria findById(int id) throws Exception {
-		 Categoria categoria = categoriaService.findId(id);
-        
-	        
-	}*/
 	
 	//mostrar por id
 	@GetMapping("/listcategoria/{id}")
@@ -87,22 +91,26 @@ public class CategoriaController {
 		}
 		
 		model.addAttribute("productos", categoria.getProductos());
+		model.addAttribute("categoria", categoria);
 		
 		return "verproductos";
 	}
 	
 
      //elimina por id
+	
+
 	@GetMapping("/delete/{id}")
-    public String deleteCategoria(@PathVariable("id") int id, Model model) throws Exception {
-        categoriaService.deleteById(id);
+
+    public String deleteCategoria(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttrs) throws Exception {
         
-      
-       List<Categoria> list = categoriaService.listAll();
-		if(list == null) System.out.println("list es null");
-		if(list.isEmpty()) System.out.println("La lista esta vacia");
-		model.addAttribute("categorias",list);
-		return "listcategoria";
+        
+        redirectAttrs
+        .addFlashAttribute("mensaje", "Eliminado correctamente")
+        .addFlashAttribute("clase", "warning");
+        categoriaService.deleteById(id);
+       
+		return "redirect:/categoria/";
     }
 	
 	//-----------------update----------------------
@@ -120,9 +128,14 @@ public class CategoriaController {
 	    }
 	 
 	    @RequestMapping(value= "/updatecategoriasucces", method = RequestMethod.POST)
-	    public String updateCategoria( Model model, @ModelAttribute ("categoria") Categoria categoria) {
-	        categoriaService.save(categoria);
-	        
+	    public String updateCategoria( Model model, @Valid @ModelAttribute ("categoria") Categoria categoria, BindingResult result, RedirectAttributes redirectAttrs) throws Exception {
+	    	if (result.hasErrors()) {
+	            return "updatecategoria";
+	        }
+	    	categoriaService.save(categoria);
+	        redirectAttrs
+            .addFlashAttribute("mensaje", "Editado correctamente")
+            .addFlashAttribute("clase", "success");
 	        return "redirect:/categoria/";
 	    }
 	

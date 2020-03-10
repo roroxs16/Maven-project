@@ -9,14 +9,14 @@
 
 <title>Poseidon</title>
 
-<link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="/rcifuent/css/listar.css" />
+
+<link rel="stylesheet" type="text/css" href="/css/listar.css" />
 <link rel="stylesheet"
-	href="/rcifuent/webjars/bootstrap/4.1.0/css/bootstrap.min.css" />
+	href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" />
 <script type="text/javascript"
-	src="/rcifuent/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script type="text/javascript"
-	src="/rcifuent/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+	src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
 <!-- <link rel="stylesheet" href="../css/shards.min.css"> -->
 </head>
 <body>
@@ -32,6 +32,7 @@
 						<a th:href="@{/producto/formularioproducto/} + ${producto.categoria.getId()}" class="btn btn-primary"><i
 							class="fas fa-user-plus ml-2"> Producto</i></a>
 					</p>
+					
 					<div class="col-md-10">
 						<h2 th:case="null">No hay Productos!</h2>
 						<div th:case="*">
@@ -41,7 +42,7 @@
 									<th>#</th>
 										<th>Producto</th>
 										<th>Valor</th>
-											<th>cantidad</th>
+										<th>cantidad</th>
 										<th>Descripcion</th>
 									
 										<th>Editar</th>
@@ -57,7 +58,7 @@
 										<td th:text="${producto.valor}"></td>
 										<td th:text="${producto.cantidad}"></td>
 										<td th:text="${producto.descripcion}"></td>
-										<td th:text="${producto.categoria.getId()}"></td>
+										<td th:text="${producto.categoria.getNombre()}"></td>
 										
 										<td><a th:href="@{/producto/updateproducto/{id}(id=${producto.id})}"
 											class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>

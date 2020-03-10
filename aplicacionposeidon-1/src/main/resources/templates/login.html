@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="utf-8">
+<title>Poseidon</title>
+<link  rel="icon"   href="/img/logotipo-color.png" type="image/png" />
+
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/home.css" />
+<link rel="stylesheet" type="text/css" href="/css/aboutus.css" />
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" />
+<script type="text/javascript"
+	src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+</head>
+
+<body>
+
+	<div th:insert="navbar">...</div>
+
+	<div class="container py-4" style="width: 400px;">
+		<div style="padding-bottom: 100px">
+
+		<div class="card text-center">
+			<div class="card-header">
+
+				<div class="card-body">
+
+					<form th:action="@{/login}" method="post">
+						<i class="fas fa-user-circle" style="font-size: 7rem"></i>
+
+						<div style="text-align: left">
+
+							<legend>Usuario</legend>
+
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="basic-addon1"><i
+										class="fas fa-user"></i></span>
+								</div>
+								<input type="text" class="form-control"
+									placeholder="usuario@mail.com" aria-label="Username"
+									aria-describedby="basic-addon1" name="username" id="username"
+									autofocus pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" required />
+							</div>
+						</div>
+
+						<div style="text-align: left">
+							<legend>Password</legend>
+							<div class="input-group mb-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+								</div>
+								<input type="password" class="form-control"
+									placeholder="Contraseña" aria-label="Username"
+									aria-describedby="basic-addon1" name="password" id="password"
+									autofocus required />
+							</div>
+
+						</div>
+
+
+
+						<div >
+							<input type="submit"
+								class="btn align-center"
+								id="btnAgregar" role="button" value="Iniciar Sesión" />
+						</div>
+						<input type="hidden" th:name="${_csrf.parameterName}"
+							th:value="${_csrf.token}" />
+					</form>
+					
+					<hr>
+					<p>¿No tienes cuenta?</p>
+				 <a th:href="@{/usuario/formulariousuario/}"> Regístrate</a>
+				</div>
+			</div>
+		</div>
+		</div>
+
+	</div>
+	<div th:insert="footer">...</div>
+
+</body>
+</html>
